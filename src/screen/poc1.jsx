@@ -74,6 +74,14 @@ export function Poc1() {
     }
   };
 
+  const handleTouchMove = (event) => {
+    if (draggingHandle) {
+      const touch = event.targetTouches[0];
+      const newPosition = touch.clientX - panHandleRef.current.clientWidth / 2;
+      setHandlePosition(newPosition);
+    }
+  };
+
   const StartDragPan = () => {
     setDraggingHandle(true);
   };
@@ -83,14 +91,21 @@ export function Poc1() {
   };
 
   return (
-    <div className="poc1" onMouseMove={handleMouseMove} onMouseUp={EndDragPan}>
-      <progress className="progress" value={score} max={200} />{" "}
+    <div
+      className="poc1"
+      onMouseMove={handleMouseMove}
+      onMouseUp={EndDragPan}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={EndDragPan}
+    >
+      <progress className="progress" value={score} max={200} />
       <div className="pan" style={{ transform: `translateX(${handlePosition}px)` }} />
       <div
         className="pan-handle"
         ref={panHandleRef}
         style={{ transform: `translate(${handlePosition}px, 0)` }}
         onMouseDown={StartDragPan}
+        onTouchStart={StartDragPan}
       />
       <div className="box">
         <div className="hitbox-a" />
