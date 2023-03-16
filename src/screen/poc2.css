@@ -42,22 +42,25 @@
     cursor: move;
 }
 
-.pan {
+.tomato {
     height: 200px;
     width: 200px;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("../assets/pan-round.svg");
+    background-image: url("../assets/tomato-whole.svg");
     background-size: contain;
 }
 
-.pan-handle {
-    width: 200px;
+
+
+.knife {
+    width: 100px;
     height: 200px;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("../assets/pan-handle.svg");
+    background-image: url("../assets/knife.svg");
     background-size: contain;
+    background-color: #00000020;
 }
 
 .hitbox-a.glow,
