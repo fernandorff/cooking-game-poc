@@ -26,14 +26,18 @@ export function Poc1() {
     if (currentPosition >= assetPositions.hitboxAStart && currentPosition <= assetPositions.hitboxAEnd) {
       setPanPosition("Hitbox A");
       if (lastPlayedHitbox !== "Hitbox A") {
-        playSound("beep");
+        setTimeout(() => {
+          playSound("beep");
+        }, 100);
         setScore((prevScore) => prevScore + 5);
         setLastPlayedHitbox("Hitbox A");
       }
     } else if (currentPosition >= assetPositions.hitboxBStart && currentPosition <= assetPositions.hitboxBEnd) {
       setPanPosition("Hitbox B");
       if (lastPlayedHitbox !== "Hitbox B") {
-        playSound("beep");
+        setTimeout(() => {
+          playSound("beep");
+        }, 100);
         setScore((prevScore) => prevScore + 5);
         setLastPlayedHitbox("Hitbox B");
       }
