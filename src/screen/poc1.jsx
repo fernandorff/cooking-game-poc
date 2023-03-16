@@ -18,6 +18,7 @@ export function Poc1() {
   const [lastPlayedHitbox, setLastPlayedHitbox] = useState(null);
   const [score, setScore] = useState(0);
   const panHandleRef = useRef(null);
+  const [previousTouchPosition, setPreviousTouchPosition] = useState(null);
 
   useEffect(() => {
     const currentPosition = assetPositions.panHandleCenter;
@@ -76,9 +77,15 @@ export function Poc1() {
 
   const handleTouchMove = (event) => {
     if (draggingHandle) {
+      event.preventDefault();
       const touch = event.targetTouches[0];
-      const newPosition = touch.clientX - panHandleRef.current.clientWidth / 2;
-      setHandlePosition(newPosition);
+
+      if (previousTouchPosition !== null) {
+        const touchMovement = touch.clientX - previousTouchPosition;
+        setHandlePosition((prevPosition) => prevPosition + touchMovement);
+      }
+
+      setPreviousTouchPosition(touch.clientX);
     }
   };
 
@@ -88,6 +95,7 @@ export function Poc1() {
 
   const EndDragPan = () => {
     setDraggingHandle(false);
+    setPreviousTouchPosition(null);
   };
 
   return (
@@ -97,6 +105,8 @@ export function Poc1() {
       onMouseUp={EndDragPan}
       onTouchMove={handleTouchMove}
       onTouchEnd={EndDragPan}
+      onTouchStart={StartDragPan}
+      style={{ touchAction: "none" }}
     >
       <progress className="progress" value={score} max={200} />
       <div className="pan" style={{ transform: `translateX(${handlePosition}px)` }} />
