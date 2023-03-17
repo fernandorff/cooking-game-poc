@@ -42,27 +42,6 @@
     cursor: move;
 }
 
-.tomato {
-    height: 200px;
-    width: 200px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("../assets/tomato-whole.svg");
-    background-size: contain;
-}
-
-
-
-.knife {
-    width: 100px;
-    height: 200px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("../assets/knife.svg");
-    background-size: contain;
-    background-color: #00000020;
-}
-
 .hitbox-a.glow,
 .hitbox-b.glow {
     box-shadow: 0 0 10px red;

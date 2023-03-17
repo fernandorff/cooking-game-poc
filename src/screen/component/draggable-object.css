@@ -1,0 +1,47 @@
+.tomato {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/tomato.svg");
+    background-size: contain;
+    background-color: #00000020;
+    overflow: hidden;
+}
+
+.tomato::before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.knife {
+    width: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/knife.svg");
+    background-size: contain;
+    background-color: #00000020;
+    overflow: hidden;
+}
+
+.knife::before {
+    content: "";
+    display: block;
+    padding-bottom: 700%;
+}
+
+.table {
+    width: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/table.svg");
+    background-size: contain;
+    background-color: #00000020;
+    overflow: hidden;
+}
+
+.table::before {
+    content: "";
+    display: block;
+    padding-bottom: 58%;
+}

@@ -103,15 +103,7 @@ export function Poc1() {
   };
 
   return (
-    <div
-      className="poc1"
-      onMouseMove={handleMouseMove}
-      onMouseUp={EndDragPan}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={EndDragPan}
-      onTouchStart={StartDragPan}
-      style={{ touchAction: "none" }}
-    >
+    <div className="poc1">
       <progress className="progress" value={score} max={200} />
       <div className="pan" style={{ transform: `translateX(${handlePosition}px)` }} />
       <div

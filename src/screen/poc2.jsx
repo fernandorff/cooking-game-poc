@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./poc2.css";
 import { playSound } from "../helpers/playSound";
+import { DraggableObject } from "./component/draggable-object.component";
 
 export function Poc2() {
   const [handlePosition, setHandlePosition] = useState(0);
@@ -75,7 +75,7 @@ export function Poc2() {
 
   const handleMouseMove = (event) => {
     if (draggingHandle) {
-      setHandlePosition((prevPosition) => prevPosition + event.movementX);
+      setHandlePosition((prevPosition) => prevPosition + event.movementY);
     }
   };
 
@@ -89,7 +89,7 @@ export function Poc2() {
         setHandlePosition((prevPosition) => prevPosition + touchMovement);
       }
 
-      setPreviousTouchPosition(touch.clientX);
+      setPreviousTouchPosition(touch.clientY);
     }
   };
 
@@ -103,34 +103,26 @@ export function Poc2() {
   };
 
   return (
-    <div
-      className="poc1"
-      onMouseMove={handleMouseMove}
-      onMouseUp={EndDragPan}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={EndDragPan}
-      onTouchStart={StartDragPan}
-      style={{ touchAction: "none" }}
-    >
-      <progress className="progress" value={score} max={200} />
-      <div className="tomato" />
+    <div className="container">
+      <div className="row">
+        <div className="col-2 bg-success d-flex flex-column align-items-center p-5">
+          <DraggableObject assetNames={["tomato"]} isDraggableX={true} isDraggableY={true} />
+          <DraggableObject assetNames={["tomato"]} isDraggableX={true} isDraggableY={true} />
+        </div>
+        <div className="col-8 bg-light vh-100 d-flex flex-column align-items-center p-5">
+          <progress className="progress" value={score} max={200} />
+          <div className="box">
+            <div className="hitbox-a" />
+            <div className="path" />
+            <div className="hitbox-b" />
+          </div>
 
-      <div
-        className="knife"
-        ref={panHandleRef}
-        style={{ transform: `translateY(${handlePosition}px)` }}
-        onMouseDown={StartDragPan}
-        onTouchStart={StartDragPan}
-      />
-      <div className="box">
-        <div className="hitbox-a" />
-        <div className="path" />
-        <div className="hitbox-b" />
+          <div className="table"></div>
+        </div>
+        <div className="col-2 bg-danger d-flex flex-column align-items-center p-5">
+          <DraggableObject assetNames={["knife"]} isDraggableX={true} isDraggableY={true} />
+        </div>
       </div>
-      <p className="paragraph">
-        Current X position of the center of the pan-handle: {assetPositions.panHandleCenter}px
-      </p>
-      <p className="paragraph">Panhandle center is within: {panPosition}</p>
     </div>
   );
 }
