@@ -8,6 +8,7 @@ export function DraggableObject({
   position = "relative",
   initialLeft = 0,
   initialTop = 0,
+  width = "100%",
 }) {
   const [objectPosition, setObjectPosition] = useState({
     x: initialLeft,
@@ -55,6 +56,10 @@ export function DraggableObject({
     setPreviousTouchPosition(null);
   };
 
+  useEffect(() => {
+    objectRef.current.style.border = isDragging ? "3px solid black" : "none";
+  }, [isDragging]);
+
   return (
     <>
       {assetNames.map((assetName, index) => (
@@ -67,6 +72,8 @@ export function DraggableObject({
             left: index === assetNames.length - 1 ? objectPosition.x : initialLeft,
             top: index === assetNames.length - 1 ? objectPosition.y : initialTop,
             touchAction: "none",
+            width: `${width}%`,
+            zIndex: 5,
           }}
           onMouseMove={index === assetNames.length - 1 ? handleMouseMove : null}
           onMouseDown={index === assetNames.length - 1 ? StartDrag : null}

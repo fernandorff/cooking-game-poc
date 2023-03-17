@@ -1,5 +1,7 @@
 .draggable {
     cursor: grab;
+    /* background-color: #00000020; */
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
 
 }
 
@@ -13,11 +15,27 @@
     background-position: center;
     background-image: url("../../assets/tomato.svg");
     background-size: contain;
-    background-color: #00000020;
     overflow: hidden;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
+
 }
 
 .tomato::before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.tomato-slice {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/tomato-slice.svg");
+    background-size: contain;
+    overflow: hidden;
+}
+
+.tomato-slice::before {
     content: "";
     display: block;
     padding-bottom: 100%;
@@ -29,7 +47,6 @@
     background-position: center;
     background-image: url("../../assets/knife.svg");
     background-size: contain;
-    background-color: #00000020;
     overflow: hidden;
 }
 
@@ -45,7 +62,6 @@
     background-position: center;
     background-image: url("../../assets/table.svg");
     background-size: contain;
-    background-color: #00000020;
     overflow: hidden;
 }
 
