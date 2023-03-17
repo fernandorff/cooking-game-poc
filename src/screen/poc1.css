@@ -36,12 +36,6 @@
     background-color: gray;
 }
 
-.draggable {
-    width: 40px;
-    position: absolute;
-    cursor: move;
-}
-
 .pan {
     height: 200px;
     width: 200px;

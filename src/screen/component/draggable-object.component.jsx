@@ -23,7 +23,7 @@ export function DraggableObject({
         x: isDraggableX ? objectPosition.x + event.movementX : objectPosition.x,
         y: isDraggableY ? objectPosition.y + event.movementY : objectPosition.y,
       };
-      setObjectPosition(newPosition);
+      requestAnimationFrame(() => setObjectPosition(newPosition));
     }
   };
 
@@ -60,7 +60,7 @@ export function DraggableObject({
       {assetNames.map((assetName, index) => (
         <div
           key={index}
-          className={assetName}
+          className={assetName + " draggable"}
           ref={index === assetNames.length - 1 ? objectRef : null}
           style={{
             position: position,
