@@ -2,75 +2,73 @@ import React, { useState, useRef, useEffect } from "react";
 import { DraggableObject } from "./draggable-object.component";
 import "./draggable-object.css";
 
-export function SliceableObject({ assetName, position = "absolute", initialLeft = 0, initialTop = 0, width = "100%" }) {
-  const [slicedCount, setSlicedCount] = useState(0);
+export function SliceableObject({
+  assetName,
+  position = "absolute",
+  initialLeft = "0px",
+  initialTop = "0px",
+  width = "100%",
+  amount = 2,
+  interactionTimes = 4,
+}) {
   const [slices, setSlices] = useState([]);
   const [isSliceAnimating, setIsSliceAnimating] = useState(false);
-  const [squareSides, setSquareSides] = useState({
-    redLeft: 0,
-    redRight: 0,
-    redTop: 0,
-    redBottom: 0,
-    blueLeft: 0,
-    blueRight: 0,
-    blueTop: 0,
-    blueBottom: 0,
+  const [hitBoxSides, setHitBoxSides] = useState({
+    hitBoxLeft: 0,
+    hitBoxRight: 0,
+    hitBoxTop: 0,
+    hitBoxBottom: 0,
   });
   const [knifePosition, setKnifePosition] = useState({ x: 0, y: 0 });
   const objectRef = useRef(null);
-  const redSquareRef = useRef(null);
-  const blueSquareRef = useRef(null);
+  const hitBoxRef = useRef(null);
   const [sliceSequence, setSliceSequence] = useState(0);
+  const [ingredientAmount, setIngredientAmount] = useState(amount);
 
   useEffect(() => {
-    const updateSquareSides = () => {
-      if (redSquareRef.current && blueSquareRef.current) {
-        const redRect = redSquareRef.current.getBoundingClientRect();
-        const blueRect = blueSquareRef.current.getBoundingClientRect();
-        setSquareSides({
-          redLeft: redRect.left,
-          redRight: redRect.right,
-          redTop: redRect.top,
-          redBottom: redRect.bottom,
-          blueLeft: blueRect.left,
-          blueRight: blueRect.right,
-          blueTop: blueRect.top,
-          blueBottom: blueRect.bottom,
-        });
+    const updateHitBoxSides = () => {
+      if (!hitBoxRef.current) return;
+
+      const hitBoxRect = hitBoxRef.current.getBoundingClientRect();
+      setHitBoxSides({
+        hitBoxLeft: hitBoxRect.left,
+        hitBoxRight: hitBoxRect.right,
+        hitBoxTop: hitBoxRect.top,
+        hitBoxBottom: hitBoxRect.bottom,
+      });
+    };
+    const onTransitionEnd = () => {
+      updateHitBoxSides();
+    };
+    if (hitBoxRef.current) {
+      hitBoxRef.current.addEventListener("transitionend", onTransitionEnd);
+    }
+    updateHitBoxSides();
+
+    return () => {
+      if (hitBoxRef.current) {
+        hitBoxRef.current.removeEventListener("transitionend", onTransitionEnd);
       }
     };
-    updateSquareSides();
-  }, []);
-
-  const handleSlice = () => {
-    setSlicedCount((prevSlicedCount) => prevSlicedCount + 1);
-    setSlices((prevSlices) => [
-      ...prevSlices,
-      {
-        id: slicedCount,
-        left: objectRef.current.offsetWidth - objectRef.current.offsetWidth * 0.2 * (slicedCount + 1),
-      },
-    ]);
-    setIsSliceAnimating(true);
-    setTimeout(() => setIsSliceAnimating(false), 50);
-  };
+  }, [slices]);
 
   useEffect(() => {
     const checkKnifePosition = () => {
       const { x, y } = knifePosition;
-      const { redLeft, redRight, redTop, redBottom, blueLeft, blueRight, blueTop, blueBottom } = squareSides;
-      console.log(redLeft, redRight, redTop, blueBottom);
+      const { hitBoxLeft, hitBoxRight, hitBoxTop, hitBoxBottom } = hitBoxSides;
 
-      if (sliceSequence === 0 && y > redTop && y < redBottom && x > redLeft && x < redRight) {
+      if (sliceSequence === 0 && y > hitBoxTop && y < hitBoxTop + 20 && x > hitBoxLeft && x < hitBoxRight) {
         setSliceSequence(1);
-      } else if (sliceSequence === 1 && y > redTop && y < redBottom && x > redLeft && x < redRight) {
-        setSliceSequence(2);
-      } else if (sliceSequence === 2 && y > blueTop && y < blueBottom && x > blueLeft && x < blueRight) {
-        setSliceSequence(3);
-      } else if (sliceSequence === 3 && y > blueTop && y < blueBottom && x > blueLeft && x < blueRight) {
+      } else if (
+        sliceSequence === 1 &&
+        y > hitBoxBottom - 20 &&
+        y < hitBoxBottom &&
+        x > hitBoxLeft &&
+        x < hitBoxRight
+      ) {
         handleSlice();
         setSliceSequence(0);
-      } else if (y < redTop || y > blueBottom || x < redLeft || x > redRight) {
+      } else if (sliceSequence === 1 && (y < hitBoxTop || y > hitBoxBottom || x < hitBoxLeft || x > hitBoxRight)) {
         setSliceSequence(0);
       }
     };
@@ -79,25 +77,56 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
   }, [knifePosition]);
 
   useEffect(() => {
-    console.log(sliceSequence);
+    console.log("sliceSequence", sliceSequence);
   }, [sliceSequence]);
+
+  useEffect(() => {
+    console.log("hitBoxSides", hitBoxSides);
+  }, [hitBoxSides]);
+
+  useEffect(() => {
+    console.log("ingredientAmount", ingredientAmount);
+  }, [ingredientAmount]);
+
+  useEffect(() => {
+    if (slices.length === interactionTimes) {
+      setIngredientAmount((prevIngredientAmount) => prevIngredientAmount - 1);
+    }
+  }, [slices]);
+
+  useEffect(() => {
+    if (slices.length === interactionTimes && ingredientAmount - 1 > 0) {
+      setSlices([]);
+    }
+  }, [slices]);
+
+  const handleSlice = () => {
+    setSlices((prevSlices) => [
+      ...prevSlices,
+      {
+        id: slices.length,
+        left: objectRef.current.offsetWidth - objectRef.current.offsetWidth * 0.2 * (slices.length + 1),
+      },
+    ]);
+    setIsSliceAnimating(true);
+    setTimeout(() => setIsSliceAnimating(false), 50);
+  };
 
   const onDraggableMove = (x, y) => {
     setKnifePosition({ x, y });
   };
 
   return (
-    <div style={{ position: "relative", display: "inline-block", width: "100%", height: "100%" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <div
-        className={assetName + " draggable"}
+        className={assetName}
         ref={objectRef}
         style={{
-          position: position,
+          position: "absolute",
           left: initialLeft,
-          top: initialTop,
           touchAction: "none",
           width: `${width}%`,
-          clipPath: `inset(0 ${slicedCount * 20}% 0 0)`,
+          clipPath: `inset(0 ${(slices.length * 100) / interactionTimes}% 0 0)`,
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 3,
@@ -105,23 +134,16 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
         }}
       >
         <div
-          ref={redSquareRef}
+          ref={hitBoxRef}
           style={{
-            backgroundColor: "red",
-            width: "20%",
-            height: "20%",
+            backgroundColor: "#00000050",
+            border: "dotted 2px black",
+            width: `${100 / interactionTimes}%`,
+            height: "100%",
             position: "absolute",
             top: "0",
-          }}
-        />
-        <div
-          ref={blueSquareRef}
-          style={{
-            backgroundColor: "blue",
-            width: "20%",
-            height: "20%",
-            position: "absolute",
-            bottom: "0",
+            right: `${(100 / interactionTimes) * slices.length}%`,
+            transition: "all 0.5s ease-in-out",
           }}
         />
       </div>
@@ -130,24 +152,39 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
           key={slice.id}
           className={assetName + "-slice draggable"}
           style={{
-            position: position,
+            position: "absolute",
             left: initialLeft,
             width: `${width * 0.8}%`,
             zIndex: 2,
             top: "50%",
-            transform: isSliceAnimating ? `translate(0, -50%)` : `translate(+${100 - 20 * slice.id}%, -50%)`,
+            transform: isSliceAnimating
+              ? `translate(0, -50%)`
+              : `translate(+${120 - (100 / interactionTimes) * slice.id}%, -50%)`,
             opacity: isSliceAnimating ? 0 : 1,
             transition: "all 0.5s ease-in-out",
           }}
         />
       ))}
       <DraggableObject
-        assetNames={["knife-blade", "knife-handle"]}
+        assetNames={["knife"]}
         isDraggableX={true}
         isDraggableY={true}
-        width={7}
+        width={4}
         onMove={onDraggableMove}
       />
+
+      <div
+        className={assetName + " d-flex justify-content-center align-items-center"}
+        style={{
+          position: "fixed",
+          width: `100px`,
+          zIndex: 3,
+          top: 0,
+          right: 0,
+        }}
+      >
+        <h2>{ingredientAmount}</h2>
+      </div>
     </div>
   );
 }
