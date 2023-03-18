@@ -18,14 +18,7 @@ export function Poc2() {
           <SliceableObject assetName={["onion"]} width={20} initialLeft={0} />
         </div>
       </div>
-      <div className="col-2 bg-danger d-flex flex-column align-items-center p-1">
-        <DraggableObject
-          assetNames={["knife-blade", "knife-handle"]}
-          isDraggableX={true}
-          isDraggableY={true}
-          width={25}
-        />
-      </div>
+      <div className="col-2 bg-danger d-flex flex-column align-items-center p-1"></div>
     </div>
   );
 }
