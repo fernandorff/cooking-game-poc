@@ -148,14 +148,9 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
         assetNames={["knife-blade", "knife-handle"]}
         isDraggableX={true}
         isDraggableY={true}
-        initialLeft={500}
-        initialTop={250}
         width={10}
         onMove={onDraggableMove}
       />
-      <p>
-        {knifePosition.x} / {knifePosition.y}
-      </p>
     </div>
   );
 }
