@@ -9,6 +9,7 @@ export function DraggableObject({
   initialLeft = 0,
   initialTop = 0,
   width = "100%",
+  onMove,
 }) {
   const [objectPosition, setObjectPosition] = useState({
     x: initialLeft,
@@ -24,7 +25,12 @@ export function DraggableObject({
         x: isDraggableX ? objectPosition.x + event.movementX : objectPosition.x,
         y: isDraggableY ? objectPosition.y + event.movementY : objectPosition.y,
       };
-      requestAnimationFrame(() => setObjectPosition(newPosition));
+      setObjectPosition(newPosition);
+
+      if (onMove && objectRefs.current[0]) {
+        const rect = objectRefs.current[0].getBoundingClientRect();
+        onMove(rect.left, rect.top);
+      }
     }
   };
 
@@ -44,6 +50,11 @@ export function DraggableObject({
       }
 
       setPreviousTouchPosition({ x: touch.clientX, y: touch.clientY });
+
+      if (onMove && objectRefs.current[0]) {
+        const rect = objectRefs.current[0].getBoundingClientRect();
+        onMove(rect.left, rect.top);
+      }
     }
   };
 
@@ -53,7 +64,6 @@ export function DraggableObject({
 
   const EndDrag = () => {
     setIsDragging(false);
-    setPreviousTouchPosition(null);
   };
 
   useEffect(() => {
@@ -61,7 +71,6 @@ export function DraggableObject({
       if (ref) {
         ref.style.left = objectPosition.x + "px";
         ref.style.top = objectPosition.y + "px";
-        // ref.style.border = isDragging ? "3px solid black" : "none";
       }
     });
   }, [isDragging, objectPosition]);
@@ -83,10 +92,10 @@ export function DraggableObject({
           }}
           onMouseMove={index === assetNames.length - 1 ? handleMouseMove : null}
           onMouseDown={index === assetNames.length - 1 ? StartDrag : null}
-          onTouchMove={index === assetNames.length - 1 ? handleTouchMove : null}
-          onTouchStart={index === assetNames.length - 1 ? StartDrag : null}
           onMouseUp={index === assetNames.length - 1 ? EndDrag : null}
           onMouseLeave={index === assetNames.length - 1 ? EndDrag : null}
+          onTouchMove={index === assetNames.length - 1 ? handleTouchMove : null}
+          onTouchStart={index === assetNames.length - 1 ? StartDrag : null}
           onTouchEnd={index === assetNames.length - 1 ? EndDrag : null}
         />
       ))}

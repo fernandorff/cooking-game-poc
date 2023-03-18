@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { playSound } from "../helpers/playSound";
 import { DraggableObject } from "./component/draggable-object.component";
-import { SliceableObject } from "./component/sliceabble-object.component";
+import { SliceableObject } from "./component/sliceable-object.component";
 
 const ingredients = ["tomato", "tomato"];
 const utensils = ["knife", "knife"];
@@ -14,11 +14,10 @@ export function Poc2() {
         <DraggableObject assetNames={["tomato"]} isDraggableX={true} isDraggableY={true} width={80} />
       </div>
       <div className="col-8 bg-light vh-100 d-flex flex-column align-items-center p-1">
-        <progress className="progress" value={100} max={200} />
+        {/* <progress className="progress" value={100} max={200} /> */}
 
-        <div className="table d-flex justify-content-center align-items-center p-5">
-          {/* <SliceableObject assetName={["tomato"]} width={33} initialLeft={0} /> */}
-          <SliceableObject assetName={["onion"]} width={33} initialLeft={0} />
+        <div className="cut-table d-flex justify-content-center align-items-center px-5 vh-100">
+          <SliceableObject assetName={["onion"]} width={20} initialLeft={0} />
         </div>
       </div>
       <div className="col-2 bg-danger d-flex flex-column align-items-center p-1">
@@ -26,7 +25,7 @@ export function Poc2() {
           assetNames={["knife-blade", "knife-handle"]}
           isDraggableX={true}
           isDraggableY={true}
-          width={55}
+          width={25}
         />
       </div>
     </div>
