@@ -141,14 +141,11 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
           }}
         />
       ))}
-      <p>
-        {squareSides.redLeft}, {squareSides.redRight}
-      </p>
       <DraggableObject
         assetNames={["knife-blade", "knife-handle"]}
         isDraggableX={true}
         isDraggableY={true}
-        width={10}
+        width={7}
         onMove={onDraggableMove}
       />
     </div>

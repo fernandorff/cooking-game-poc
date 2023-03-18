@@ -14,9 +14,7 @@ export function Poc2() {
         <DraggableObject assetNames={["tomato"]} isDraggableX={true} isDraggableY={true} width={80} />
       </div>
       <div className="col-8 bg-light vh-100 d-flex flex-column align-items-center p-1">
-        {/* <progress className="progress" value={100} max={200} /> */}
-
-        <div className="cut-table d-flex justify-content-center align-items-center px-5 vh-100">
+        <div className="cut-table d-flex px-5 vh-100">
           <SliceableObject assetName={["onion"]} width={20} initialLeft={0} />
         </div>
       </div>
