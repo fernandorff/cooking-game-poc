@@ -1,6 +1,6 @@
 .draggable {
     cursor: grab;
-    /* background-color: #00000020; */
+    background-color: #00000020;
     filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
 
 }
@@ -33,6 +33,7 @@
     background-image: url("../../assets/tomato-slice.svg");
     background-size: contain;
     overflow: hidden;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
 }
 
 .tomato-slice::before {
@@ -40,6 +41,41 @@
     display: block;
     padding-bottom: 100%;
 }
+
+.onion {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/onion.svg");
+    background-size: contain;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
+
+}
+
+.onion::before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.onion-slice {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/onion-slice.svg");
+    background-size: contain;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.onion-slice::before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+
 
 .knife {
     width: 50%;
@@ -53,7 +89,37 @@
 .knife::before {
     content: "";
     display: block;
-    padding-bottom: 700%;
+    padding-bottom: 500%;
+}
+
+.knife-blade {
+    width: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/knife-blade.svg");
+    background-size: contain;
+    overflow: hidden;
+}
+
+.knife-blade::before {
+    content: "";
+    display: block;
+    padding-bottom: 200%;
+}
+
+.knife-handle {
+    width: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../assets/knife-handle.svg");
+    background-size: contain;
+    overflow: hidden;
+}
+
+.knife-handle::before {
+    content: "";
+    display: block;
+    padding-bottom: 130%;
 }
 
 .table {
@@ -63,6 +129,8 @@
     background-image: url("../../assets/table.svg");
     background-size: contain;
     overflow: hidden;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
+
 }
 
 .table::before {

@@ -26,35 +26,9 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        display: "inline-block",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      {slices.map((slice) => (
-        <div
-          key={slice.id}
-          className={assetName + "-slice"}
-          style={{
-            position: position,
-            top: objectPosition.y,
-            width: `${width * 0.8}%`,
-            zIndex: 2,
-            top: "50%",
-            transform: isSliceAnimating
-              ? `translate(calc(${slice.left}px - 100%), -50%)`
-              : `translate(+${100 - 20 * slice.id}%, -50%)`,
-            opacity: isSliceAnimating ? 0 : 1,
-            transition: "transform 0.5s ease-in-out, opacity 0.5s ease-in-out",
-          }}
-        />
-      ))}
-
+    <div style={{ position: "relative", display: "inline-block", width: "100%", height: "100%" }}>
       <div
-        className={assetName}
+        className={assetName + " draggable"}
         ref={objectRef}
         style={{
           position: position,
@@ -66,9 +40,27 @@ export function SliceableObject({ assetName, position = "absolute", initialLeft 
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 3,
+          transition: "all 0.5s ease-in-out",
         }}
         onClick={handleSlice}
       />
+      {slices.map((slice) => (
+        <div
+          key={slice.id}
+          className={assetName + "-slice draggable"}
+          style={{
+            position: position,
+            left: objectPosition.x,
+            top: objectPosition.y,
+            width: `${width * 0.8}%`,
+            zIndex: 2,
+            top: "50%",
+            transform: isSliceAnimating ? `translate(0, -50%)` : `translate(+${100 - 20 * slice.id}%, -50%)`,
+            opacity: isSliceAnimating ? 0 : 1,
+            transition: "transform 0.5s ease-in-out, opacity 0.5s ease-in-out",
+          }}
+        />
+      ))}
     </div>
   );
 }

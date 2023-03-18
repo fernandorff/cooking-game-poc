@@ -15,7 +15,7 @@ export function DraggableObject({
     y: initialTop,
   });
   const [isDragging, setIsDragging] = useState(false);
-  const objectRef = useRef(null);
+  const objectRefs = useRef([]);
   const [previousTouchPosition, setPreviousTouchPosition] = useState(null);
 
   const handleMouseMove = (event) => {
@@ -57,8 +57,14 @@ export function DraggableObject({
   };
 
   useEffect(() => {
-    objectRef.current.style.border = isDragging ? "3px solid black" : "none";
-  }, [isDragging]);
+    objectRefs.current.forEach((ref) => {
+      if (ref) {
+        ref.style.left = objectPosition.x + "px";
+        ref.style.top = objectPosition.y + "px";
+        // ref.style.border = isDragging ? "3px solid black" : "none";
+      }
+    });
+  }, [isDragging, objectPosition]);
 
   return (
     <>
@@ -66,11 +72,11 @@ export function DraggableObject({
         <div
           key={index}
           className={assetName + " draggable"}
-          ref={index === assetNames.length - 1 ? objectRef : null}
+          ref={(ref) => (objectRefs.current[index] = ref)}
           style={{
             position: position,
-            left: index === assetNames.length - 1 ? objectPosition.x : initialLeft,
-            top: index === assetNames.length - 1 ? objectPosition.y : initialTop,
+            left: initialLeft,
+            top: initialTop,
             touchAction: "none",
             width: `${width}%`,
             zIndex: 5,

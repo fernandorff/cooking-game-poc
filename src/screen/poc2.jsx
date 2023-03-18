@@ -17,11 +17,17 @@ export function Poc2() {
         <progress className="progress" value={100} max={200} />
 
         <div className="table d-flex justify-content-center align-items-center p-5">
-          <SliceableObject assetName={["tomato"]} width={33} />
+          {/* <SliceableObject assetName={["tomato"]} width={33} initialLeft={0} /> */}
+          <SliceableObject assetName={["onion"]} width={33} initialLeft={0} />
         </div>
       </div>
       <div className="col-2 bg-danger d-flex flex-column align-items-center p-1">
-        <DraggableObject assetNames={["knife"]} isDraggableX={true} isDraggableY={true} width={25} />
+        <DraggableObject
+          assetNames={["knife-blade", "knife-handle"]}
+          isDraggableX={true}
+          isDraggableY={true}
+          width={55}
+        />
       </div>
     </div>
   );
