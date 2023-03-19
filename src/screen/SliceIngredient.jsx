@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { DraggableObject } from "./draggable-object.component";
-import "./draggable-object.css";
-import { playSound } from "../../helpers/playSound";
+import "./objects.css";
+import { playSound } from "../helpers/playSound";
+import { DraggableObject } from "./component/draggable-object.component";
 
-export function SliceableObject({
+export function SliceIngredient({
   assetName,
   position = "absolute",
   initialLeft = "0px",
@@ -110,76 +110,78 @@ export function SliceableObject({
   };
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
-      <div
-        className={assetName}
-        ref={objectRef}
-        style={{
-          position: "absolute",
-          left: initialLeft,
-          touchAction: "none",
-          width: `${width}%`,
-          clipPath: `inset(0 ${(slices.length * 100) / interactionTimes}% 0 0)`,
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 3,
-          transition: "all 0.5s ease-in-out",
-        }}
-      >
+    <div className="cut-table d-flex h-100 mx-auto">
+      <div style={{ width: "100%", height: "100%" }}>
         <div
-          ref={hitBoxRef}
-          style={{
-            backgroundColor: "#00000050",
-            border: "dotted 2px black",
-            borderTopColor: sliceSequence === 1 ? "#ffffff50" : "black",
-            borderTopWidth: sliceSequence === 1 ? `${knifePosition.y - hitBoxSides.hitBoxTop}px` : 2,
-            borderTopStyle: "solid",
-            width: `${100 / interactionTimes}%`,
-            height: "100%",
-            position: "absolute",
-            top: "0",
-            right: `${(100 / interactionTimes) * slices.length}%`,
-            transition: "right 0.5s ease-in-out",
-          }}
-        />
-      </div>
-      {slices.map((slice) => (
-        <div
-          key={slice.id}
-          className={assetName + "-slice"}
+          className={assetName}
+          ref={objectRef}
           style={{
             position: "absolute",
             left: initialLeft,
-            width: `${width * 0.8}%`,
-            zIndex: 2,
+            touchAction: "none",
+            width: `${width}%`,
+            clipPath: `inset(0 ${(slices.length * 100) / interactionTimes}% 0 0)`,
             top: "50%",
-            transform: isSliceAnimating
-              ? `translate(0, -50%)`
-              : `translate(+${120 - (100 / interactionTimes) * slice.id}%, -50%)`,
-            opacity: isSliceAnimating ? 0 : 1,
+            transform: "translateY(-50%)",
+            zIndex: 3,
             transition: "all 0.5s ease-in-out",
           }}
+        >
+          <div
+            ref={hitBoxRef}
+            style={{
+              backgroundColor: "#00000050",
+              border: "dotted 2px black",
+              borderTopColor: sliceSequence === 1 ? "#ffffff50" : "black",
+              borderTopWidth: sliceSequence === 1 ? `${knifePosition.y - hitBoxSides.hitBoxTop}px` : 2,
+              borderTopStyle: "solid",
+              width: `${100 / interactionTimes}%`,
+              height: "100%",
+              position: "absolute",
+              top: "0",
+              right: `${(100 / interactionTimes) * slices.length}%`,
+              transition: "right 0.5s ease-in-out",
+            }}
+          />
+        </div>
+        {slices.map((slice) => (
+          <div
+            key={slice.id}
+            className={assetName + "-slice"}
+            style={{
+              position: "absolute",
+              left: initialLeft,
+              width: `${width * 0.8}%`,
+              zIndex: 2,
+              top: "50%",
+              transform: isSliceAnimating
+                ? `translate(0, -50%)`
+                : `translate(+${120 - (100 / interactionTimes) * slice.id}%, -50%)`,
+              opacity: isSliceAnimating ? 0 : 1,
+              transition: "all 0.5s ease-in-out",
+            }}
+          />
+        ))}
+        <DraggableObject
+          assetNames={["knife"]}
+          isDraggableX={true}
+          isDraggableY={true}
+          width={15}
+          onMove={onDraggableMove}
         />
-      ))}
-      <DraggableObject
-        assetNames={["knife"]}
-        isDraggableX={true}
-        isDraggableY={true}
-        width={10}
-        onMove={onDraggableMove}
-      />
 
-      <div
-        className={assetName + " d-flex justify-content-center align-items-center"}
-        style={{
-          position: "fixed",
-          width: `100px`,
-          zIndex: 3,
-          top: 0,
-          right: 0,
-        }}
-      >
-        <h2>{ingredientAmount}</h2>
+        <div
+          className={assetName + " d-flex justify-content-center align-items-center"}
+          style={{
+            position: "fixed",
+            width: `100px`,
+            zIndex: 3,
+            top: 0,
+            right: 0,
+          }}
+        >
+          <h2>{ingredientAmount}</h2>
+        </div>
       </div>
     </div>
   );

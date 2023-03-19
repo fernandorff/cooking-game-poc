@@ -10,6 +10,7 @@ export function DraggableObject({
   initialTop = 0,
   width = "100%",
   onMove,
+  scale = 1,
 }) {
   const [objectPosition, setObjectPosition] = useState({
     x: initialLeft,
@@ -29,7 +30,9 @@ export function DraggableObject({
 
       if (onMove && objectRefs.current[0]) {
         const rect = objectRefs.current[0].getBoundingClientRect();
-        onMove(rect.left, rect.top);
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        onMove(centerX, centerY);
       }
     }
   };
@@ -89,6 +92,8 @@ export function DraggableObject({
             touchAction: "none",
             width: `${width}%`,
             zIndex: 5,
+            transform: `scale(${scale})`,
+            transition: "scale 0.1s ease-in-out",
           }}
           onMouseMove={index === assetNames.length - 1 ? handleMouseMove : null}
           onMouseDown={index === assetNames.length - 1 ? StartDrag : null}

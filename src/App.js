@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { Poc1 } from "./screen/poc1.jsx";
 import { Poc2 } from "./screen/poc2.jsx";
+import { SliceIngredient } from "./screen/SliceIngredient";
+import { DiceIngredient } from "./screen/DiceIngredient";
 
 export default function App() {
   return (
@@ -20,15 +22,27 @@ export default function App() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/poc2" className="nav-link text-light">
-                Poc 2
+              <Link to="/slice-ingredient" className="nav-link text-light">
+                Slice Ingredient
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/dice-ingredient" className="nav-link text-light">
+                Dice Ingredient
               </Link>
             </li>
           </ul>
         </nav>
         <Routes>
           <Route path="/poc1" element={<Poc1 />} />
-          <Route path="/poc2" element={<Poc2 />} />
+          <Route
+            path="/slice-ingredient"
+            element={<SliceIngredient assetName={"tomato"} width={25} initialLeft={"10%"} />}
+          />
+          <Route
+            path="/dice-ingredient"
+            element={<DiceIngredient assetName={"tomato"} width={25} initialLeft={"10%"} />}
+          />
         </Routes>
       </div>
     </BrowserRouter>
