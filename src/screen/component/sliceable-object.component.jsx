@@ -168,7 +168,7 @@ export function SliceableObject({
         assetNames={["knife"]}
         isDraggableX={true}
         isDraggableY={true}
-        width={4}
+        width={3}
         onMove={onDraggableMove}
       />
 
