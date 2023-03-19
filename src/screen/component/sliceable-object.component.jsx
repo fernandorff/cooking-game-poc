@@ -57,15 +57,9 @@ export function SliceableObject({
       const { x, y } = knifePosition;
       const { hitBoxLeft, hitBoxRight, hitBoxTop, hitBoxBottom } = hitBoxSides;
 
-      if (sliceSequence === 0 && y > hitBoxTop && y < hitBoxTop + 20 && x > hitBoxLeft && x < hitBoxRight) {
+      if (sliceSequence === 0 && y > hitBoxTop && y < hitBoxTop + 5 && x > hitBoxLeft && x < hitBoxRight) {
         setSliceSequence(1);
-      } else if (
-        sliceSequence === 1 &&
-        y > hitBoxBottom - 20 &&
-        y < hitBoxBottom &&
-        x > hitBoxLeft &&
-        x < hitBoxRight
-      ) {
+      } else if (sliceSequence === 1 && y > hitBoxBottom - 5 && y < hitBoxBottom && x > hitBoxLeft && x < hitBoxRight) {
         handleSlice();
         setSliceSequence(0);
       } else if (sliceSequence === 1 && (y < hitBoxTop || y > hitBoxBottom || x < hitBoxLeft || x > hitBoxRight)) {
@@ -116,6 +110,8 @@ export function SliceableObject({
     setKnifePosition({ x, y });
   };
 
+  console.log(knifePosition.y - hitBoxSides.hitBoxTop);
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <div
@@ -138,12 +134,15 @@ export function SliceableObject({
           style={{
             backgroundColor: "#00000050",
             border: "dotted 2px black",
+            borderTopColor: sliceSequence === 1 ? "#ffffff50" : "black",
+            borderTopWidth: sliceSequence === 1 ? `${knifePosition.y - hitBoxSides.hitBoxTop}px` : 2,
+            borderTopStyle: "solid",
             width: `${100 / interactionTimes}%`,
             height: "100%",
             position: "absolute",
             top: "0",
             right: `${(100 / interactionTimes) * slices.length}%`,
-            transition: "all 0.5s ease-in-out",
+            transition: "right 0.5s ease-in-out",
           }}
         />
       </div>

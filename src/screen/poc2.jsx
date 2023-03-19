@@ -9,7 +9,7 @@ const utensils = ["knife", "knife"];
 export function Poc2() {
   return (
     <div className="cut-table d-flex h-100">
-      <SliceableObject assetName={["tomato"]} width={15} initialLeft={"10%"} />
+      <SliceableObject assetName={["onion"]} width={15} initialLeft={"10%"} />
     </div>
   );
 }
