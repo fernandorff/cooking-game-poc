@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { DraggableObject } from "./draggable-object.component";
 import "./draggable-object.css";
+import { playSound } from "../../helpers/playSound";
 
 export function SliceableObject({
   assetName,
@@ -26,9 +27,7 @@ export function SliceableObject({
   const [ingredientAmount, setIngredientAmount] = useState(amount);
 
   useEffect(() => {
-    const updateHitBoxSides = () => {
-      if (!hitBoxRef.current) return;
-
+    const onTransitionEnd = () => {
       const hitBoxRect = hitBoxRef.current.getBoundingClientRect();
       setHitBoxSides({
         hitBoxLeft: hitBoxRect.left,
@@ -37,13 +36,11 @@ export function SliceableObject({
         hitBoxBottom: hitBoxRect.bottom,
       });
     };
-    const onTransitionEnd = () => {
-      updateHitBoxSides();
-    };
+
     if (hitBoxRef.current) {
       hitBoxRef.current.addEventListener("transitionend", onTransitionEnd);
+      onTransitionEnd();
     }
-    updateHitBoxSides();
 
     return () => {
       if (hitBoxRef.current) {
@@ -85,6 +82,7 @@ export function SliceableObject({
   useEffect(() => {
     if (slices.length === interactionTimes) {
       setIngredientAmount((prevIngredientAmount) => prevIngredientAmount - 1);
+      playSound("success", 0.2);
     }
   }, [slices]);
 
@@ -103,14 +101,13 @@ export function SliceableObject({
       },
     ]);
     setIsSliceAnimating(true);
+    playSound("slice", 0.2);
     setTimeout(() => setIsSliceAnimating(false), 50);
   };
 
   const onDraggableMove = (x, y) => {
     setKnifePosition({ x, y });
   };
-
-  console.log(knifePosition.y - hitBoxSides.hitBoxTop);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -149,7 +146,7 @@ export function SliceableObject({
       {slices.map((slice) => (
         <div
           key={slice.id}
-          className={assetName + "-slice draggable"}
+          className={assetName + "-slice"}
           style={{
             position: "absolute",
             left: initialLeft,
