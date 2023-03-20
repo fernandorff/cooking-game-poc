@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./draggable-object.css";
+import "./objects.css";
 
 export function DraggableObject({
   assetNames,

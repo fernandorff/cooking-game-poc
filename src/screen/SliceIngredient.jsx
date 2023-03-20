@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./objects.css";
 import { playSound } from "../helpers/playSound";
-import { DraggableObject } from "./component/draggable-object.component";
+import { DraggableObject } from "./draggable-object.component";
 
 export function SliceIngredient({
   assetName,
@@ -66,18 +66,6 @@ export function SliceIngredient({
 
     checkKnifePosition();
   }, [knifePosition]);
-
-  useEffect(() => {
-    console.log("sliceSequence", sliceSequence);
-  }, [sliceSequence]);
-
-  useEffect(() => {
-    console.log("hitBoxSides", hitBoxSides);
-  }, [hitBoxSides]);
-
-  useEffect(() => {
-    console.log("ingredientAmount", ingredientAmount);
-  }, [ingredientAmount]);
 
   useEffect(() => {
     if (slices.length === interactionTimes) {

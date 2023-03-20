@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./objects.css";
 import { playSound } from "../helpers/playSound";
-import { DraggableObject } from "./component/draggable-object.component";
+import { DraggableObject } from "./draggable-object.component";
 
 export function DiceIngredient({
   assetName,
@@ -144,7 +144,7 @@ export function DiceIngredient({
               backgroundColor: "#00000050",
               border: "dotted 2px black",
               borderTopColor: diceSequence === 1 ? "#ffffff50" : "black",
-              borderTopWidth: diceSequence === 1 ? `${clickCount * hitBoxRef.current.offsetWidth * 0.4}px` : 2,
+              borderTopWidth: diceSequence === 1 ? `${clickCount * hitBoxRef.current.offsetWidth * 0.4}px` : `2px`,
               borderTopStyle: "solid",
               width: `${100 / interactionTimes}%`,
               height: "100%",

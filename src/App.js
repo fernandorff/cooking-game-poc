@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { Poc1 } from "./screen/poc1.jsx";
-import { Poc2 } from "./screen/poc2.jsx";
 import { SliceIngredient } from "./screen/SliceIngredient";
 import { DiceIngredient } from "./screen/DiceIngredient";
+import { ProcessIngredient } from "./screen/ProcessIngredient";
 
 export default function App() {
   return (
@@ -22,27 +22,21 @@ export default function App() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/slice-ingredient" className="nav-link text-light">
-                Slice Ingredient
+              <Link to="/process-ingredient-slice" className="nav-link text-light">
+                Process Ingredient (slice tomato)
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/dice-ingredient" className="nav-link text-light">
-                Dice Ingredient
+              <Link to="/process-ingredient-dice" className="nav-link text-light">
+                Process Ingredient (dice onion)
               </Link>
             </li>
           </ul>
         </nav>
         <Routes>
           <Route path="/poc1" element={<Poc1 />} />
-          <Route
-            path="/slice-ingredient"
-            element={<SliceIngredient assetName={"tomato"} width={25} initialLeft={"10%"} />}
-          />
-          <Route
-            path="/dice-ingredient"
-            element={<DiceIngredient assetName={"tomato"} width={25} initialLeft={"10%"} />}
-          />
+          <Route path="/process-ingredient-slice" element={<ProcessIngredient assetName={"tomato"} mode={"slice"} />} />
+          <Route path="/process-ingredient-dice" element={<ProcessIngredient assetName={"onion"} mode={"dice"} />} />
         </Routes>
       </div>
     </BrowserRouter>
